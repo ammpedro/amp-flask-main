@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=emotive
+      - POSTGRES_USER=emotive
+      - POSTGRES_PASSWORD=emotive
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  app:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: dockerfile
+    environment:
+      - ENV=local
+      - FLASK_ENV=local
+      - FLASK_APP=app:create_app("local")
+      - FLASK_DEBUG=1
+      - DATABASE_URI=postgresql://emotive:emotive@db:5432/emotive
+      - OPEN_WEATHER_APP_ID=${OPEN_WEATHER_APP_ID}
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./app:/app
+      - ./tests:/tests
+    command: runserver
+
+volumes:
+  db_data:
+    driver: local

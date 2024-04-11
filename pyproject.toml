@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "take-home-flask-main"
+version = "0.1.0"
+description = ""
+authors = ["ampedro <pedro.ana.marian@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.31.0"
+python-dotenv = "^1.0.1"
+flask = "^3.0.3"
+pytest = "^8.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
