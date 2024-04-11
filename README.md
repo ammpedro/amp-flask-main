@@ -1,7 +1,6 @@
-# Take Home - Flask Skeleton
-
 ## Getting Started
 Dependencies:
+* .env - should contain the OPEN_WEATHER_APP_ID for https://openweathermap.org/api 
 * Docker - See [Get Docker](https://docs.docker.com/get-docker/)
 * Docker Compose - Installed with Docker Desktop, See [Install Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -10,36 +9,40 @@ With the dependencies installed, running the project is as simple as running:
 docker compose up
 ```
 
-This will pull the required Docker images and spin up a container running your service on http://127.0.0.1:5050.
+This will pull the required Docker images and spin up a container running the service on http://127.0.0.1:5050.
 
 To end the service, press `Ctrl+C`
 
-## The Activity
-Build a simple API in Python, using Django or Flask. This API should integrate with a third party service or a database and accomplish something interesting, but also shouldn’t take terribly long to implement - endpoints for one or two resources would be sufficient. This activity shouldn’t take more than an hour or so. If this doesn’t seem like much time - you’re right! We expect that you’ll have to focus on one of a few areas for your API:
-* The API design and interface (REST vs. GraphQL)
-* Integration with a third-party API OR Integration with a database
+## GET /run-advice?city=manila
+This endpoint returns air pollution data for Manila to help determine if it is a good day to run outdoors. 
 
-### Requirements
-1. A clear problem statement - what do you intend the API to accomplish?
-2. Dependencies for running the API
-3. A code repository link from which your interview can checkout the code OR a .zip file containing the source code
-4. A README file in the code root containing instructions for running the API
+### Usage
+```
+curl 'http://127.0.0.1:5050/run-advice?city=manila'
+```
 
-### Some Ideas...
-#### Interesting APIs
-* [NASA Open APIs](https://api.nasa.gov/index.html)
-* [OpenWeather API](https://openweathermap.org/api)
-* [Polygon.io Stocks API](https://polygon.io/)
+### Status 200 Response
+```commandline
+{
+  "data": {
+    "co": 988.01,
+    "nh3": 20.52,
+    "no": 2.32,
+    "no2": 36.67,
+    "o3": 0.53,
+    "pm10": 44.42,
+    "pm2_5": 23.98,
+    "so2": 19.55
+  },
+  "message": "Air quality is Fair right now",
+  "status": "ok"
+}
+```
 
-Plus anything more you can discover
-#### Databases
-* [SQLite](https://www.sqlite.org/index.html)
-* [PostgreSQL](https://www.postgresql.org/)
-* [MySQL](https://www.mysql.com/)
-* [MariaDB](https://mariadb.org/)
-
-PostgreSQL is provided in our skeleton projects, but another database is fine if you’d prefer.
-#### Projects
-* A stock recommendation service
-* A green/red alert for outdoor activity safety
-* A Mars Rover camera viewer
+### Status 401 Response
+```commandline
+{
+  "message": "City=tokyo is not supported",
+  "status": "failed"
+}
+```
