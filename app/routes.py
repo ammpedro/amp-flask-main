@@ -11,12 +11,12 @@ def home():
 
 @bp.route("/run-advice", methods=["GET"])
 def get_run_advice():
-    """Determines if """
+    """Returns air pollution data, air quality index, and if it's a good idea to run"""
     city = request.args.get("city")
     supported_cities = {"manila": {"lat": "14.5995", "lon": "120.9842"}}
 
     if city not in supported_cities:
-        return jsonify({"status": "failed", "message": f"City={city} is not supported"})
+        return jsonify({"status": "failed", "message": f"City={city} is not supported"}), 400
 
     response, code = get_air_pollution_data(supported_cities.get(city))
 

@@ -25,24 +25,36 @@ curl 'http://127.0.0.1:5050/run-advice?city=manila'
 ```commandline
 {
   "data": {
-    "co": 988.01,
-    "nh3": 20.52,
-    "no": 2.32,
-    "no2": 36.67,
-    "o3": 0.53,
-    "pm10": 44.42,
-    "pm2_5": 23.98,
-    "so2": 19.55
+    "co": 1121.52,
+    "nh3": 14.57,
+    "no": 14.19,
+    "no2": 30.5,
+    "o3": 19.13,
+    "pm10": 53.41,
+    "pm2_5": 30.8,
+    "so2": 34.33
   },
-  "message": "Air quality is Fair right now",
+  "message": "Air quality is Moderate right now; You could run!",
   "status": "ok"
+}
+```
+
+### Status 400 Response
+```commandline
+{
+  "message": "City=tokyo is not supported",
+  "status": "failed"
 }
 ```
 
 ### Status 401 Response
 ```commandline
 {
-  "message": "City=tokyo is not supported",
-  "status": "failed"
+  "data": {
+    "cod": 401,
+    "message": "Invalid API key. Please see https://openweathermap.org/faq#error401 for more info."
+  },
+  "status": "failed",
+  "url": "https://api.openweathermap.org/data/2.5/air_pollution?appid=<invalid-app-id>&lat=14.5995&lon=120.9842"
 }
 ```
